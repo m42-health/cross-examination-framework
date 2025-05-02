@@ -1,0 +1,68 @@
+# A file keeping track of all prompts used and tested to date for the Summarization-Evaluation project
+# Authors: Tathagata Raha, Nada Saadi, Hamza Javed
+# Company: M42
+# Date: June 2024
+
+# System instruction
+# --
+system_instruction_set:
+  basic_v0: "You are a helpful biomedical assistant."
+
+
+# User instruction
+# --
+user_instruction_set:
+
+  qa_gen_document_v0: "As a biomedical engineering expert, please formulate {num_questions} critical, concise and closed-ended questions (in a YES/NO format) that thoroughly scrutinize the {document_task}. Questions should be about the content of the document and not include any qualifier of the clarity, justification or definition.
+
+**Note**
+The questions have to be STRICTLY closed-ended and should not be subjective or open to human interpretation.
+You should return in a JSON format. The JSON should be a list of dictionaries where each dictionary will have two keys:
+- 'question': specifying the question
+- 'answer': either YES or NO.
+
+Document:
+{text}
+
+JSON:
+"
+
+  qa_gen_summary_v0: "As a biomedical engineering expert, generate {num_questions} YES/NO concise, objective and critical questions from this summary. The questions have to be strictly about the content of the summary.
+
+**Note**
+The questions have to be STRICTLY closed-ended and should not be subjective or open to human interpretation.
+You should return in a JSON format. The JSON should be a list of dictionaries where each dictionary will have two keys:
+- 'question': specifying the question
+- 'answer': either YES or NO.
+
+Summary:
+{text}
+
+JSON:
+"
+
+  gen_summary_v0: "As a biomedical engineering expert, generate a concise and objective summary from the description below:
+
+Document:
+{text}
+
+Summary:
+"
+
+  gen_answers_v0: "As a biomedical engineering expert, answer the following questions with a YES or NO, grounded on the text content only. Do not use any external knowledge. If you cannot answer the question based on the provided text, please respond with 'IDK'.
+
+**Note**
+You should respond either YES, NO or IDK.
+
+Text:
+{text}
+
+Question:
+{question}
+
+Answer:
+"
+
+tasks:
+  generic: "content of the document"
+  trial: "the protocol, participant selection, interventions, and objectives of the clinical trial"
