@@ -247,7 +247,7 @@ def calculate_summary_reduction(samp, src, out):
     reduction_ratio = (description_word_count - summary_word_count) / description_word_count
     reduction_percentage = reduction_ratio * 100
 
-    return {"brief score": reduction_percentage}
+    return {"conciseness score": reduction_percentage}
 
 
 def calculate_scores(samp, key1, key2) -> dict:
@@ -295,6 +295,6 @@ def calculate_scores(samp, key1, key2) -> dict:
         fact = -1
     return {
         "coverage score": coverage,
-        "conform score": conform,
-        "fact score": fact
+        "conformity score": conform,
+        "consistency score": fact
     }

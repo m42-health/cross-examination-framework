@@ -11,12 +11,10 @@ import uuid
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# --- Assumed Imports ---
 try:
     from utils import load_yaml
-    from QAG import generate_qa_from_text, cross_examine, calculate_scores
-    # Assuming you finalized the async version of LLM_Caller
-    from LLM_API import LLM_Caller # Or LLM_API_multiprocess if that's the final name
+    from QAG import generate_qa_from_text, cross_examine, calculate_scores, calculate_summary_reduction
+    from LLM_API import LLM_Caller
 except ImportError as e:
     logger.error(f"Error importing helper modules: {e}", exc_info=True)
     raise e
@@ -28,7 +26,7 @@ DEFAULT_PROMPT_CATALOGUE_PATH = "prompts.yaml"
 # --- Pydantic Models ---
 class QAPair(BaseModel):
     question: str
-    answer: str # Or adjust type if answer format varies
+    answer: str
 
 class CrossExamRequest(BaseModel):
     original_document: str
@@ -39,22 +37,15 @@ class CrossExamRequest(BaseModel):
 
 class CrossExamScores(BaseModel):
     coverage_score: Optional[float] = None
-    conform_score: Optional[float] = None
-    fact_score: Optional[float] = None
+    conformity_score: Optional[float] = None
+    consistency_score: Optional[float] = None
+    conciseness_score: Optional[float] = None
     overall_score: Optional[float] = None
 
-# Define a model for the QA pair structure for clarity (Optional but good practice)
 
 class CrossExamResponse(BaseModel):
     scores: CrossExamScores
     details: Optional[Dict[str, Any]] = None
-    # Example structure for details:
-    # {
-    #     "qa_from_doc_count": int,
-    #     "qa_from_summary_count": int,
-    #     "questions_from_original_doc": List[QAPair] | List[Dict] | None,
-    #     "questions_from_generated_doc": List[QAPair] | List[Dict] | None
-    # }
 
 # --- FastAPI App ---
 app = FastAPI(
@@ -115,11 +106,12 @@ async def perform_cross_examination(
         qa_sum_params = pipeline_params["gen_qa_summary"]
         cross_exam_params = pipeline_params["cross_examine"]
         score_params = pipeline_params["calc_scores"]
+        api_key = pipeline_params["api_key"]
 
-        llm_api_qa_gen_doc = LLM_Caller(qa_doc_params["base_endpoint"], prompt_filepath=prompt_catalogue_path)
+        llm_api_qa_gen_doc = LLM_Caller(qa_doc_params["base_endpoint"], api_key=api_key, prompt_filepath=prompt_catalogue_path)
         qa_sum_endpoint = qa_sum_params.get("base_endpoint", qa_doc_params["base_endpoint"])
-        llm_api_qa_gen_sum = LLM_Caller(qa_sum_endpoint, prompt_filepath=prompt_catalogue_path)
-        llm_api_cross_exam = LLM_Caller(cross_exam_params["base_endpoint"], prompt_filepath=prompt_catalogue_path)
+        llm_api_qa_gen_sum = LLM_Caller(qa_sum_endpoint, api_key=api_key, prompt_filepath=prompt_catalogue_path)
+        llm_api_cross_exam = LLM_Caller(cross_exam_params["base_endpoint"], api_key=api_key, prompt_filepath=prompt_catalogue_path)
     except Exception as e:
          logger.error(f"RID: {request_id} - Error during setup: {e}", exc_info=True)
          # Re-raise appropriate HTTPException or handle
@@ -155,12 +147,8 @@ async def perform_cross_examination(
         logger.debug(f"RID: {request_id} - Step 1 Result (qa_from_doc): {qa_from_doc_repr}")
         if qa_from_doc is not None and (not isinstance(qa_from_doc, list) or not all('question' in item and 'answer' in item for item in qa_from_doc)):
              logger.warning(f"RID: {request_id} - Unexpected format for qa_from_doc: {type(qa_from_doc)}. Check QAG.generate_qa_from_text output.")
-             # Decide if this is critical - maybe set qa_from_doc to None or []?
-             # qa_from_doc = None
     except Exception as e:
         logger.error(f"RID: {request_id} - Error in Step 1: {e}", exc_info=True)
-        # Don't raise here, allow processing to continue if possible, log the error
-        # The details dict will show qa_from_doc is None or empty
 
     # --- Step 2: Generate QA from Generated Document (Summary/Note) ---
     logger.info(f"RID: {request_id} - Step 2: Generating QA from Generated Document...")
@@ -177,10 +165,8 @@ async def perform_cross_examination(
         logger.debug(f"RID: {request_id} - Step 2 Result (qa_from_summary): {qa_from_summary_repr}")
         if qa_from_summary is not None and (not isinstance(qa_from_summary, list) or not all('question' in item and 'answer' in item for item in qa_from_summary)):
              logger.warning(f"RID: {request_id} - Unexpected format for qa_from_summary: {type(qa_from_summary)}. Check QAG.generate_qa_from_text output.")
-             # qa_from_summary = None
     except Exception as e:
         logger.error(f"RID: {request_id} - Error in Step 2: {e}", exc_info=True)
-        # Don't raise here
 
     # --- Step 3: Cross Examination ---
     logger.info(f"RID: {request_id} - Step 3: Performing Cross Examination...")
@@ -242,21 +228,28 @@ async def perform_cross_examination(
             calculated_scores = calculate_scores(mock_row, doc_answers_key, sum_answers_key)
             logger.debug(f"RID: {request_id} - Raw calculated_scores: {calculated_scores}")
 
+            conciseness_score = calculate_summary_reduction(mock_row, src_key, gen_key)
+            logger.debug(f"RID: {request_id} - Raw conciness_scores: {conciseness_score}")
+
+
             if not isinstance(calculated_scores, dict):
                 logger.warning(f"RID: {request_id} - calculate_scores did not return a dict. Got: {type(calculated_scores)}. Scores will be empty.")
                 calculated_scores = {}
 
             coverage = calculated_scores.get('coverage score')
-            conform = calculated_scores.get('conform score')
-            fact = calculated_scores.get('fact score')
+            conform = calculated_scores.get('conformity score')
+            consistency = calculated_scores.get('consistency score')
 
-            valid_scores = [s for s in [coverage, conform, fact] if isinstance(s, (int, float)) and s >= 0] # Ensure valid scores (e.g., >=0)
+            conciseness = conciseness_score.get('conciseness score')
+
+            valid_scores = [s for s in [coverage, conform, consistency] if isinstance(s, (int, float)) and s >= 0] # Ensure valid scores (e.g., >=0)
             overall = np.mean(valid_scores) if valid_scores else None
 
             final_scores_obj = CrossExamScores(
                 coverage_score=coverage,
-                conform_score=conform,
-                fact_score=fact,
+                conformity_score=conform,
+                consistency_score=consistency,
+                conciseness_score=conciseness,
                 overall_score=overall
             )
             logger.info(f"RID: {request_id} - Final Scores: {final_scores_obj.dict()}")
