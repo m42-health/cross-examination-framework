@@ -1,6 +1,6 @@
 # MEDIC: Cross-Examination Framework
 
-The Cross-Examination Framework is a Python API designed to evaluate the performance of LLMs in clinical generation tasks such as summarization, clinical and SOAP note generation. It is integrated into the broader MEDIC evaluation framework. ([Preprint](https://arxiv.org/abs/2409.07314), [🤗 leaderboard](https://huggingface.co/spaces/m42-health/MEDIC-Benchmark)).
+The Cross-Examination Framework is a Python library designed to evaluate the performance of LLMs in clinical generation tasks such as summarization, clinical and SOAP note generation without requiring reference (ground truth) data. It is integrated into the broader MEDIC evaluation framework. ([Preprint](https://arxiv.org/abs/2409.07314), [🤗 leaderboard](https://huggingface.co/spaces/m42-health/MEDIC-Benchmark)).
 
 ![Cross-Examination Framework](cross-examination-diagram.png)
 
