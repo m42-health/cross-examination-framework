@@ -1,7 +1,7 @@
 # Global 
 prompts_filepath: "prompts.yaml" 
 base_endpoint: "https://api.openai.com/v1/"  # vllm host address for API requests (e.g. base_endpoint + "/chat_completions") 
-api_key: "MY_API_KEY"
+api_key: "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"
 task: soap
 model: instruct-70b
 

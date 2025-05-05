@@ -1,6 +1,6 @@
-# MEDIC: A Comprehensive Framework For Leading Indicators of LLM Performance in Clinical Applications: Cross-Examination Framework
+# MEDIC: Cross-Examination Framework
 
-The Cross-Examination Framework is a Python API designed to evaluate the performance of LLMs in clinical generation tasks such as summarization, clinical and SOAP note generation.
+The Cross-Examination Framework is a Python API designed to evaluate the performance of LLMs in clinical generation tasks such as summarization, clinical and SOAP note generation. It is integrated into the broader MEDIC evaluation framework. ([Preprint](https://arxiv.org/abs/2409.07314), [🤗 leaderboard](https://huggingface.co/spaces/m42-health/MEDIC-Benchmark)).
 
 ![Cross-Examination Framework](cross-examination-diagram.png)
 
@@ -16,6 +16,10 @@ The application has been successfully tested on the following hardware configura
 ## Installation
 
 ```
+# Clone the repository
+git clone https://github.com/m42-health/cross-examination-framework.git
+cd cross-examination-framework
+
 # Create conda environment and install dependencies
 # Installation shoud take under 60 seconds on a Macbook
 conda env create -f environment.yml
@@ -51,6 +55,90 @@ curl -X POST \
   }' \
   http://0.0.0.0:8893/evaluate
 ```
+### Expected output
+<details>
+<summary><i>Expected response from the API call above</i></summary>
+
+```json
+{
+    "scores": {
+        "coverage_score": 1.0,
+        "conformity_score": 1.0,
+        "consistency_score": 1.0,
+        "conciseness_score": 31.343283582089555,
+        "overall_score": 1.0
+    },
+    "details": {
+        "qa_from_doc_count": 10,
+        "qa_from_summary_count": 5,
+        "questions_from_original_doc": [
+            {
+                "question": "Is the patient a 65-year-old male?",
+                "answer": "YES"
+            },
+            {
+                "question": "Does the patient have a history of hypertension?",
+                "answer": "YES"
+            },
+            {
+                "question": "Is the patient diagnosed with type 2 diabetes?",
+                "answer": "YES"
+            },
+            {
+                "question": "Did the chest pain start 2 hours ago?",
+                "answer": "YES"
+            },
+            {
+                "question": "Is the chest pain described as crushing and substernal?",
+                "answer": "YES"
+            },
+            {
+                "question": "Does the pain radiate to the left arm?",
+                "answer": "YES"
+            },
+            {
+                "question": "Does the EKG show ST elevation in leads V2-V5?",
+                "answer": "YES"
+            },
+            {
+                "question": "Are troponin levels elevated?",
+                "answer": "YES"
+            },
+            {
+                "question": "Is the assessment of the patient acute ST-elevation myocardial infarction (STEMI)?",
+                "answer": "YES"
+            },
+            {
+                "question": "Is the plan for the patient emergent cardiac catheterization?",
+                "answer": "YES"
+            }
+        ],
+        "questions_from_generated_doc": [
+            {
+                "question": "Does the patient have a history of hypertension?",
+                "answer": "YES"
+            },
+            {
+                "question": "Is the patient's chest pain described as crushing?",
+                "answer": "YES"
+            },
+            {
+                "question": "Does the EKG show ST elevation in leads V2-V5?",
+                "answer": "YES"
+            },
+            {
+                "question": "Is the diagnosis of the patient acute STEMI?",
+                "answer": "YES"
+            },
+            {
+                "question": "Is an urgent cardiac catheterization planned for the patient?",
+                "answer": "YES"
+            }
+        ]
+    }
+}
+```
+</details>
 
 ## Scores
 
@@ -71,6 +159,7 @@ This project is licensed under CC BY-NC-4.0 - see the [LICENSE.md](LICENSE.md) f
 Contributions are welcome! Please feel free to submit a Pull Request. 
 
 ## Citation
+
 If you find this repository useful, please consider giving a star and citation:
 ```
 @article{kanithi2024medic,
