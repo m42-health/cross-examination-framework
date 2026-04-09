@@ -1,0 +1,48 @@
+[
+  {
+    "id": 270,
+    "src": "Madam President, I was here in Parliament when the Chernobyl explosion took place. One of the clearest memories I have of that time is the rush with which many of our European governments ran to press to claim that in some mysterious way the contamination had wondrously blown away from their countries and not polluted their countries, so that they could sell their radishes, lettuces and cabbages without anyone assuming - horror of horrors - that they had also been affected by the disaster of Chernobyl.\n<P>\nPerhaps it was the appalling vista of the potential effects of that explosion that caused so many governments and individuals to run for cover; because they simply could not contemplate it. The explosion and its aftermath were surrounded by a wall of secrecy - and indeed, in many cases, they continue to be surrounded by that wall of secrecy - and were largely ignored by the international scientific community, while a few heroic Russian scientists did all they could to contain the aftermath of that explosion.\n<P>\nIt is now largely through the efforts of some highly motivated NGOs and some journalists that the full extent of the genetic time-bomb which was released in Chernobyl that day is revealed in its full horror. The full impact of the radioactive fall-out on human health is still being assessed, and I do not believe adequately assessed. Already we have seen a generation of children with grotesque and life-threatening malformations. We have got a new word in our vocabulary now: the 'Belarus necklace' , applicable to a generation of children have had their throats slit from ear to ear to deal with their thyroid cancer. We have done too little to alleviate the pain and distress of these children and their families.\n<P>\nMany generous families and medical specialists in my own country are doing splendid work, but the scale of the disaster requires a concentrated and coordinated world-wide response. We must provide more medical help for these victims. I fear that the potential consequences, should the downside of the nuclear industry become more widely evident, are probably too much for some of our Member States to bear.",
+    "trg": "Madame le Pr\u00e9sident, je me trouvais ici, au Parlement, lorsque l'explosion s'est produite \u00e0 Chernobyl. Comment expliquer que l'un des souvenirs les plus clairs qui aient marqu\u00e9 ma m\u00e9moire \u00e0 l'\u00e9poque est l'empressement avec lequel de nombreux gouvernements europ\u00e9ens ont fondu sur la presse pour proclamer que, comme par enchantement, la contamination avait \u00e9pargn\u00e9 leur pays, si bien qu'ils pouvaient vendre leurs radis, leurs laitues et leurs choux sans que personne ne s'imagine, oh horreur, qu'ils avaient \u00e9galement \u00e9t\u00e9 touch\u00e9s par la catastrophe de Chernobyl.\n<P>\nPeut-\u00eatre est-ce la vue effroyable des effets potentiels de cette explosion qui a pouss\u00e9 tant de gouvernements et d'individus \u00e0 se voiler la face, du fait qu'ils ne pouvaient tout simplement pas la contempler. L'explosion et ses cons\u00e9quences ont \u00e9t\u00e9 entour\u00e9es d'un mur de silence et, \u00e0 vrai dire, dans de nombreux cas, continuent de l'\u00eatre. Elles ont \u00e9t\u00e9 largement ignor\u00e9es par la communaut\u00e9 scientifique internationale tandis qu'une poign\u00e9e de scientifiques russes h\u00e9ro\u00efques faisaient tout ce qui \u00e9tait en leur pouvoir pour endiguer les cons\u00e9quences de la catastrophe.\n<P>\nAujourd'hui, c'est surtout gr\u00e2ce aux efforts de certaines ONG extr\u00eamement motiv\u00e9es et de certains journalistes, que la v\u00e9ritable nature de la bombe \u00e0 retardement g\u00e9n\u00e9tique d\u00e9clench\u00e9e \u00e0 Chernobyl ce jour-l\u00e0 est r\u00e9v\u00e9l\u00e9e dans toute son horreur. L'impact v\u00e9ritable des retomb\u00e9es radioactives sur la sant\u00e9 humaine est encore en cours d'\u00e9valuation et, \u00e0 mon sens, de fa\u00e7on inad\u00e9quate. Nous avons d\u00e9j\u00e0 vu une g\u00e9n\u00e9ration d'enfants afflig\u00e9s de malformations grotesques et parfois mortelles. Une nouvelle expression est entr\u00e9e dans notre vocabulaire, le \u00abcollier bi\u00e9lorusse\u00bb, caract\u00e9risant une g\u00e9n\u00e9ration d'enfants dont la gorge a \u00e9t\u00e9 incis\u00e9e d'une oreille \u00e0 l'autre pour traiter le cancer de la thyro\u00efde. Nous n'avons pas fait suffisamment pour all\u00e9ger la souffrance et la d\u00e9tresse de ces enfants et de leur famille.\n<P>\nBeaucoup de familles g\u00e9n\u00e9reuses et de m\u00e9decins sp\u00e9cialistes de mon propre pays effectuent un travail remarquable. L'ampleur du d\u00e9sastre exige cependant une r\u00e9ponse concert\u00e9e et coordonn\u00e9e au niveau mondial. Nous devons apporter une aide m\u00e9dicale plus importante \u00e0 ces victimes. Je crains que les cons\u00e9quences potentielles, si l'aspect n\u00e9gatif de l'industrie nucl\u00e9aire devenait plus \u00e9vident, ne soient probablement trop lourdes \u00e0 porter pour certains de nos \u00c9tats membres.",
+    "src_token_len": 393,
+    "__index_level_0__": 44086,
+    "src_tokens": 393,
+    "trg_tokens": 409,
+    "total_tokens": 802,
+    "cef_scores": {
+      "conciseness_score": null,
+      "conformity_score": null,
+      "consistency_score": null,
+      "coverage_score": null,
+      "overall_score": null
+    },
+    "cef_details": {
+      "qa_from_doc_count": 0,
+      "qa_from_summary_count": 0,
+      "questions_from_generated_doc": [],
+      "questions_from_original_doc": []
+    }
+  },
+  {
+    "id": 1088,
+    "src": "Mr President, would you be prepared to clarify the voting procedure on the Bontempi report because we do have a voting session this evening and I question why you said it would be taken tomorrow? I would not like colleagues to be under any illusions of when this will take place.",
+    "trg": "Monsieur le Pr\u00e9sident, seriez-vous pr\u00eat \u00e0 clarifier la proc\u00e9dure de scrutin concernant le rapport Bontempi car nous avons une s\u00e9ance de votes ce soir et je me demande pourquoi vous avez dit que ce serait report\u00e9 \u00e0 demain? Je ne voudrais pas que mes coll\u00e8gues se fassent de fausses id\u00e9es.",
+    "src_token_len": 54,
+    "__index_level_0__": 66618,
+    "src_tokens": 54,
+    "trg_tokens": 53,
+    "total_tokens": 107,
+    "cef_scores": {
+      "conciseness_score": null,
+      "conformity_score": null,
+      "consistency_score": null,
+      "coverage_score": null,
+      "overall_score": null
+    },
+    "cef_details": {
+      "qa_from_doc_count": 0,
+      "qa_from_summary_count": 0,
+      "questions_from_generated_doc": [],
+      "questions_from_original_doc": []
+    }
+  }
+]

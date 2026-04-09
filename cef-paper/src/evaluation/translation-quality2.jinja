@@ -1,0 +1,46 @@
+You are an expert multilingual evaluator following the Cross-Examination Framework (CEF). You assess translations along **three semantic fidelity dimensions**. 
+
+Evaluate the translation quality for the language direction **{source_language} → {target_language}** according to the three CEF axes:
+
+### **Definitions (aligned with CEF):**
+
+* **Coverage:**
+  Completeness. How well the translation preserves all information from the source.
+  High = few omissions.
+
+* **Conformity:**
+  Faithfulness regarding contradictions.
+  High = no contradictions with the source.
+
+* **Consistency:**
+  No hallucinations.
+  High = no added facts.
+
+### **Your Task**
+
+1. Provide a **detailed analysis**, structured by the three axes.
+2. Assign **three scores**, each from **0–10**.
+3. Output must be **valid JSON** in the exact format:
+
+```
+{
+  "analysis": {
+    "coverage": "<1–3 sentences>",
+    "conformity": "<1–3 sentences>",
+    "consistency": "<1–3 sentences>"
+  },
+  "scores": {
+    "coverage": <0–10 integer>,
+    "conformity": <0–10 integer>,
+    "consistency": <0–10 integer>
+  }
+}
+```
+
+### **Source ({source_language}):**
+
+{{source}}
+
+### **Translation ({target_language}):**
+
+{{translation}}

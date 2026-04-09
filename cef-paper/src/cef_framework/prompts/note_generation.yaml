@@ -1,0 +1,102 @@
+# Prompts for ACI (Ambient Clinical Intelligence) Note Generation
+# Used for generating clinical notes from doctor-patient conversations
+# Authors: Tathagata Raha, Nada Saadi, Hamza Javed
+# Company: M42
+# Date: December 2024
+
+# System instruction
+# --
+system_instruction_set:
+  basic_v0: "You are a helpful medical assistant specialized in clinical documentation and note generation."
+
+
+# User instruction
+# --
+user_instruction_set:
+
+  # Question generation from conversation (source)
+  qa_gen_conversation_v0: "As an expert in clinical documentation, please formulate {num_questions} critical, concise and closed-ended questions (in a YES/NO format) in English that thoroughly scrutinize the doctor-patient conversation. The questions generated should ALWAYS result in a 'YES' based on the given conversation. Questions should be about the factual clinical content of the conversation (symptoms, diagnoses, medications, test results, treatment plans, patient history) and not include any qualifier of clarity, justification or definition.
+
+**Note**
+The questions have to be STRICTLY closed-ended and should not be subjective or open to human interpretation.
+You should return in a JSON format. The JSON should be a list of dictionaries where each dictionary will have two keys:
+- 'question': specifying the question
+- 'answer': either YES or NO.
+The given conversation should be able to answer 'YES' for each generated question.
+
+Doctor-Patient Conversation:
+{text}
+
+JSON:
+"
+
+  # Question generation from clinical note (target)
+  qa_gen_note_v0: "As an expert in clinical documentation, generate {num_questions} YES/NO concise, objective and critical questions in English from this clinical note. The questions generated should ALWAYS result in a 'YES' based on the given note. The questions have to be strictly about the factual clinical content of the note (chief complaint, history, physical exam findings, assessment, plan, medications).
+
+**Note**
+The questions have to be STRICTLY closed-ended and should not be subjective or open to human interpretation.
+You should return in a JSON format. The JSON should be a list of dictionaries where each dictionary will have two keys:
+- 'question': specifying the question
+- 'answer': either YES or NO.
+The given note should be able to answer 'YES' for each generated question.
+
+Clinical Note:
+{text}
+
+JSON:
+"
+
+  # Answer generation
+  gen_answers_v0: "As an expert in clinical documentation, answer the following English question with a YES or NO, grounded on the text content only. Do not use any external medical knowledge. If you cannot answer the question based on the provided text, please respond with 'IDK'.
+
+**Note**
+You should respond either YES, NO or IDK. You should respond with a single word and only in English.
+
+Text:
+{text}
+
+Question:
+{question}
+
+Answer:
+"
+
+  # Clinical note generation from conversation
+  gen_note_v0: "As an expert medical scribe, generate a comprehensive clinical note from the following doctor-patient conversation. The note should follow standard medical documentation format including:
+
+- CHIEF COMPLAINT
+- HISTORY OF PRESENT ILLNESS
+- REVIEW OF SYSTEMS
+- PHYSICAL EXAMINATION (if mentioned)
+- RESULTS (if any tests/labs mentioned)
+- ASSESSMENT AND PLAN
+
+Be thorough and capture all clinically relevant information from the conversation. Use professional medical terminology while maintaining accuracy to what was discussed.
+
+Doctor-Patient Conversation:
+{text}
+
+Clinical Note:
+"
+
+  # Structured clinical note generation
+  gen_note_structured_v0: "You are a professional medical scribe. Generate a structured clinical note from the following doctor-patient conversation.
+
+The note MUST include these sections (if information is available):
+1. CHIEF COMPLAINT - The main reason for the visit
+2. HISTORY OF PRESENT ILLNESS - Detailed description of current symptoms, onset, duration, severity
+3. PAST MEDICAL HISTORY - Relevant medical conditions mentioned
+4. MEDICATIONS - Current medications discussed
+5. REVIEW OF SYSTEMS - Systems reviewed during the conversation
+6. PHYSICAL EXAMINATION - Any physical exam findings mentioned
+7. RESULTS - Lab results, imaging, or test results discussed
+8. ASSESSMENT AND PLAN - Diagnoses and treatment plan
+
+Be accurate and only include information explicitly mentioned in the conversation. Do not add information that was not discussed.
+
+Doctor-Patient Conversation:
+{text}
+
+Clinical Note:
+"
+

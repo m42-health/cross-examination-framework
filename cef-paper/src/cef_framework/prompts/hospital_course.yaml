@@ -1,0 +1,71 @@
+# Prompts for evaluating Brief Hospital Course generation in Discharge Summaries
+# Authors: Tathagata Raha
+# Date: December 2024
+
+# System instruction
+# --
+system_instruction_set:
+  basic_v0: "You are a helpful medical assistant with expertise in clinical documentation."
+
+
+# User instruction
+# --
+user_instruction_set:
+
+  qa_gen_document_v0: "As a medical documentation expert, please formulate {num_questions} critical, concise and closed-ended questions (in a YES/NO format) that thoroughly scrutinize the {document_task}. The questions generated should ALWAYS result in a 'YES' based on the given reference Brief Hospital Course text. Questions should be about the clinical content, medical facts, patient history, diagnoses, treatments, procedures, and outcomes mentioned in the reference Brief Hospital Course.
+
+**Note**
+The questions have to be STRICTLY closed-ended and should not be subjective or open to human interpretation. Focus on verifiable medical facts and events during the hospital stay.
+You should return in a JSON format. The JSON should be a list of dictionaries where each dictionary will have two keys:
+- 'question': specifying the question
+- 'answer': either YES or NO.
+The given reference Brief Hospital Course should be able to answer 'YES' for each generated question.
+
+Reference Brief Hospital Course:
+{text}
+
+JSON:
+"
+
+  qa_gen_summary_v0: "As a medical documentation expert, generate {num_questions} YES/NO concise, objective and critical questions from this generated Brief Hospital Course. The questions generated should ALWAYS result in a 'YES' based on the given generated Brief Hospital Course text. The questions have to be strictly about the clinical content, medical facts, patient history, diagnoses, treatments, procedures, and outcomes.
+
+**Note**
+The questions have to be STRICTLY closed-ended and should not be subjective or open to human interpretation. Focus on verifiable medical facts and events.
+You should return in a JSON format. The JSON should be a list of dictionaries where each dictionary will have two keys:
+- 'question': specifying the question
+- 'answer': either YES or NO.
+The given generated Brief Hospital Course should be able to answer 'YES' for each generated question.
+
+Generated Brief Hospital Course:
+{text}
+
+JSON:
+"
+
+
+  gen_summary_v0: "As a medical documentation expert, generate a concise and objective Brief Hospital Course from the discharge summary information below:
+
+Discharge Summary Information:
+{text}
+
+Brief Hospital Course:
+"
+
+  gen_answers_v0: "As a medical documentation expert, answer the following question with a YES or NO, grounded on the Brief Hospital Course content only. Do not use any external medical knowledge. If you cannot answer the question based on the provided Brief Hospital Course text, please respond with 'IDK'.
+
+**Note**
+You should respond either YES, NO or IDK. You should respond with a single word only.
+
+Brief Hospital Course:
+{text}
+
+Question:
+{question}
+
+Answer:
+"
+
+tasks:
+  generic: "content and clinical information in the Brief Hospital Course"
+  hospital_course: "patient's hospital stay including diagnoses, treatments, procedures, and clinical outcomes documented in the Brief Hospital Course"
+
