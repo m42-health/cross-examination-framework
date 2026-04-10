@@ -208,11 +208,14 @@ This project is licensed under [CC BY-NC 4.0](LICENSE.md).
 If you use CEF in your research, please cite:
 
 ```bibtex
-@article{raha2025cef,
-  title={CEF: Cross-Examination Framework for Evaluating LLMs in Document Generation Tasks},
-  author={Raha, Tathagata and others},
-  journal={arXiv preprint arXiv:2601.19350},
-  year={2025}
+@misc{raha2026crossexaminationframeworktaskagnosticdiagnostic,
+      title={Cross-Examination Framework: A Task-Agnostic Diagnostic for Information Fidelity in Text-to-Text Generation}, 
+      author={Tathagata Raha and Clement Christophe and Nada Saadi and Hamza A Javed and Marco AF Pimentel and Ronnie Rajan and Praveenkumar Kanithi},
+      year={2026},
+      eprint={2601.19350},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2601.19350}, 
 }
 ```
 
