@@ -1,0 +1,71 @@
+# Prompts for evaluating Discharge Instructions generation in Discharge Summaries
+# Authors: Tathagata Raha
+# Date: December 2024
+
+# System instruction
+# --
+system_instruction_set:
+  basic_v0: "You are a helpful medical assistant with expertise in patient discharge planning and clinical documentation."
+
+
+# User instruction
+# --
+user_instruction_set:
+
+  qa_gen_document_v0: "As a medical discharge planning expert, please formulate {num_questions} critical, concise and closed-ended questions (in a YES/NO format) that thoroughly scrutinize the {document_task}. The questions generated should ALWAYS result in a 'YES' based on the given reference Discharge Instructions text. Questions should be about the patient discharge information, follow-up care, medications, activity restrictions, monitoring instructions, and post-discharge management mentioned in the reference Discharge Instructions.
+
+**Note**
+The questions have to be STRICTLY closed-ended and should not be subjective or open to human interpretation. Focus on verifiable discharge instructions, care guidelines, and patient education.
+You should return in a JSON format. The JSON should be a list of dictionaries where each dictionary will have two keys:
+- 'question': specifying the question
+- 'answer': either YES or NO.
+The given reference Discharge Instructions should be able to answer 'YES' for each generated question.
+
+Reference Discharge Instructions:
+{text}
+
+JSON:
+"
+
+  qa_gen_summary_v0: "As a medical discharge planning expert, generate {num_questions} YES/NO concise, objective and critical questions from this generated Discharge Instructions. The questions generated should ALWAYS result in a 'YES' based on the given generated Discharge Instructions text. The questions have to be strictly about the patient discharge information, follow-up care, medications, activity restrictions, monitoring instructions, and post-discharge management.
+
+**Note**
+The questions have to be STRICTLY closed-ended and should not be subjective or open to human interpretation. Focus on verifiable discharge instructions and care guidelines.
+You should return in a JSON format. The JSON should be a list of dictionaries where each dictionary will have two keys:
+- 'question': specifying the question
+- 'answer': either YES or NO.
+The given generated Discharge Instructions should be able to answer 'YES' for each generated question.
+
+Generated Discharge Instructions:
+{text}
+
+JSON:
+"
+
+
+  gen_summary_v0: "As a medical discharge planning expert, generate concise and comprehensive Discharge Instructions from the discharge summary information below:
+
+Discharge Summary Information:
+{text}
+
+Discharge Instructions:
+"
+
+  gen_answers_v0: "As a medical discharge planning expert, answer the following question with a YES or NO, grounded on the Discharge Instructions content only. Do not use any external medical knowledge. If you cannot answer the question based on the provided Discharge Instructions text, please respond with 'IDK'.
+
+**Note**
+You should respond either YES, NO or IDK. You should respond with a single word only.
+
+Discharge Instructions:
+{text}
+
+Question:
+{question}
+
+Answer:
+"
+
+tasks:
+  generic: "content and patient care information in the Discharge Instructions"
+  discharge_instructions: "patient's discharge planning including follow-up care, medications, activity restrictions, monitoring instructions, and post-discharge management documented in the Discharge Instructions"
+

@@ -1,0 +1,73 @@
+# A file keeping track of all prompts used for the CNN/DailyMail Summarization Robustness Study
+# Authors: Tathagata Raha, Nada Saadi, Hamza Javed
+# Company: M42
+# Date: December 2024
+
+# System instruction
+# --
+system_instruction_set:
+  basic_v0: "You are a helpful assistant specialized in summarization evaluation."
+
+
+# User instruction
+# --
+user_instruction_set:
+
+  qa_gen_article_v0: "As an expert in text comprehension, please formulate {num_questions} critical, concise and closed-ended questions (in a YES/NO format) in English that thoroughly scrutinize the news article. The questions generated should ALWAYS result in a 'YES' based on the given article. Questions should be about the factual content of the article (events, people, places, dates, actions) and not include any qualifier of clarity, justification or definition.
+
+
+**Note**
+The questions have to be STRICTLY closed-ended and should not be subjective or open to human interpretation.
+You should return in a JSON format. The JSON should be a list of dictionaries where each dictionary will have two keys:
+- 'question': specifying the question
+- 'answer': either YES or NO.
+The given article should be able to answer 'YES' for each generated question.
+
+Article:
+{text}
+
+JSON:
+"
+
+  qa_gen_summary_v0: "As an expert in text comprehension, generate {num_questions} YES/NO concise, objective and critical questions in English from this news summary. The questions generated should ALWAYS result in a 'YES' based on the given summary. The questions have to be strictly about the factual content of the summary (key events, main actors, outcomes).
+
+**Note**
+The questions have to be STRICTLY closed-ended and should not be subjective or open to human interpretation.
+You should return in a JSON format. The JSON should be a list of dictionaries where each dictionary will have two keys:
+- 'question': specifying the question
+- 'answer': either YES or NO.
+The given summary should be able to answer 'YES' for each generated question.
+
+Summary:
+{text}
+
+JSON:
+"
+
+  gen_answers_v0: "As an expert in text comprehension, answer the following English question with a YES or NO, grounded on the text content only. Do not use any external knowledge. If you cannot answer the question based on the provided text, please respond with 'IDK'.
+
+**Note**
+You should respond either YES, NO or IDK. You should respond with a single word and only in English.
+
+Text:
+{text}
+
+Question:
+{question}
+
+Answer:
+"
+
+  gen_highlights_v0: "As an expert in news summarization, generate concise bullet-point highlights from the following news article. Each highlight should be a single sentence capturing a key piece of information from the article. Focus on the most important facts, events, and outcomes.
+
+**Note**
+- Generate 3-5 highlights
+- Each highlight should be a complete, standalone sentence
+- Highlights should cover the main points without redundancy
+- Use clear, objective language
+
+Article:
+{text}
+
+Highlights:
+"

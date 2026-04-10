@@ -1,0 +1,64 @@
+
+You are an expert summarization evaluator specializing in cross-framework alignment between CEF (Cross-Examination Framework) and human factuality annotations.
+Your task is to determine whether a **human-annotated factuality error** corresponds — directly or indirectly — to one or more **CEF mismatching questions**.
+
+A correspondence exists if:
+
+* the human-annotated error and the CEF mismatching question(s) reflect **the same underlying issue**,
+* or they point to **the same problematic part** of the summary,
+* or if the error pointed out by human annotators resulted in the mismatching answers for the given question even if indirectly.
+
+You must judge conceptual overlap *only*, not whether the frameworks should match.
+
+You are given:
+
+* **Source Article:** {{article}}
+
+* **Generated Summary:** {{summary}}
+
+* **CEF Mismatching Questions:**
+  {{cef_mismatching_questions}}
+
+* **Human-Annotated Error:**
+  Sentence: "{{error_sentence}}"
+  Error Types: {{error_types}}
+  
+  Error Type Definitions:
+  - RelE (Relation Error): Wrong relation/predicate used between entities
+  - EntE (Entity Error): Wrong entity in a role (wrong subject/object)
+  - CircE (Circumstance Error): Wrong time, location, manner, or other circumstantial details
+  - CorefE (Coreference Error): Pronouns or references pointing to wrong entities
+  - LinkE (Discourse Link Error): Wrong logical connectives
+  - OutE (Out of Article Error): Information not in the source article (hallucination)
+  - GramE (Grammatical Error): Ungrammatical text that prevents fact verification
+
+---
+
+### **Your Task**
+
+Determine whether the **human-annotated error** corresponds to at least one of the **CEF mismatching questions**, in the sense that:
+
+* They refer to the **same portion of the summary**, or
+* They reflect the **same underlying factuality mistake**, or
+* The CEF mismatch and human error diagnose **overlapping issues**, even if in different terminology.
+* The CEF mismatching question happened because of the error pointed out by human annotators even if indirectly
+
+If there is **any meaningful conceptual connection**, answer **"YES"**.
+If they are unrelated, answer **"NO"**.
+
+---
+
+### **Output Format**
+
+Return **valid JSON**:
+
+```
+{
+  "explanation": "<3–6 sentence explanation of why the human-annotated error is or is not reflected in one or more CEF mismatches>",
+  "verdict": "YES" or "NO"
+}
+```
+
+Do *not* output anything other than JSON.
+
+

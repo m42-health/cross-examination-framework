@@ -1,0 +1,113 @@
+# =============================================================================
+# Python
+# =============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+.eggs/
+*.so
+
+# =============================================================================
+# Environments
+# =============================================================================
+.env
+.env.*
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# =============================================================================
+# Models & Checkpoints (never commit model weights)
+# =============================================================================
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.h5
+*.onnx
+*.pkl
+models/
+checkpoints/
+
+# =============================================================================
+# Large Datasets (download separately — see EXPERIMENTS.md)
+# =============================================================================
+# Rotowire / boxscore
+data/boxscore-data/
+
+# FRANK dataset
+data/frank/
+
+# WMT25 human evaluation data (123MB+)
+wmt25/wmt25-genmt-humeval.jsonl
+wmt25/wmt25-enja-extracted-samples-with-errors.jsonl
+
+# General large data formats
+*.jsonl
+*.parquet
+*.arrow
+*.feather
+
+# HuggingFace datasets saved to disk (DatasetDict)
+results_ds/
+*_ds/
+
+# =============================================================================
+# Results, Outputs & Logs
+# =============================================================================
+outputs/
+results/
+results_cef/
+results_trad/
+results_tq/
+*.log
+*.out
+logs/
+
+# =============================================================================
+# Notebooks
+# =============================================================================
+notebooks/.ipynb_checkpoints/
+.ipynb_checkpoints/
+
+# =============================================================================
+# Editor / OS
+# =============================================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# =============================================================================
+# Specific secrets / credentials
+# =============================================================================
+pipeline_params_local.yaml
+secrets.yaml
+*.key

@@ -1,0 +1,99 @@
+# Prompts for RotoWire Boxscore-to-Summary Generation
+# Task: Generate NBA game news summaries from boxscore data
+# Based on: Wiseman et al. 2017 "Challenges in Data-to-Document Generation"
+# Authors: Tathagata Raha, Nada Saadi, Hamza Javed
+# Company: M42
+# Date: December 2024
+
+# System instruction
+# --
+system_instruction_set:
+  basic_v0: "You are a professional sports journalist specializing in NBA basketball coverage."
+
+
+# User instruction
+# --
+user_instruction_set:
+
+  # Question generation from boxscore (source)
+  qa_gen_boxscore_v0: "As an expert sports analyst, please formulate {num_questions} critical, concise and closed-ended questions (in a YES/NO format) in English that thoroughly scrutinize the boxscore data. The questions generated should ALWAYS result in a 'YES' based on the given boxscore. Questions should be about the factual content of the boxscore (scores, player statistics, team records, game outcomes) and not include any qualifier of clarity, justification or definition.
+
+**Note**
+The questions have to be STRICTLY closed-ended and should not be subjective or open to human interpretation.
+You should return in a JSON format. The JSON should be a list of dictionaries where each dictionary will have two keys:
+- 'question': specifying the question
+- 'answer': either YES or NO.
+The given boxscore should be able to answer 'YES' for each generated question.
+
+Boxscore Data:
+{text}
+
+JSON:
+"
+
+  # Question generation from game summary (target)
+  qa_gen_summary_v0: "As an expert sports analyst, generate {num_questions} YES/NO concise, objective and critical questions in English from this NBA game summary. The questions generated should ALWAYS result in a 'YES' based on the given summary. The questions have to be strictly about the factual content of the summary (game outcomes, player performances, scores, statistics mentioned).
+
+**Note**
+The questions have to be STRICTLY closed-ended and should not be subjective or open to human interpretation.
+You should return in a JSON format. The JSON should be a list of dictionaries where each dictionary will have two keys:
+- 'question': specifying the question
+- 'answer': either YES or NO.
+The given summary should be able to answer 'YES' for each generated question.
+
+Game Summary:
+{text}
+
+JSON:
+"
+
+  # Answer generation
+  gen_answers_v0: "As an expert sports analyst, answer the following English question with a YES or NO, grounded on the text content only. Do not use any external knowledge about NBA games or players. If you cannot answer the question based on the provided text, please respond with 'IDK'.
+
+**Note**
+You should respond either YES, NO or IDK. You should respond with a single word and only in English.
+
+Text:
+{text}
+
+Question:
+{question}
+
+Answer:
+"
+
+  # Game summary generation from boxscore
+  gen_summary_v0: "As a professional NBA sports journalist, write a comprehensive news summary for the following basketball game based on the boxscore data provided.
+
+Your summary should:
+- Report the final score and winning team
+- Highlight top performers from both teams with their key statistics
+- Mention notable performances (double-doubles, triple-doubles, high scorers)
+- Include team records and standings context if available
+- Be written in engaging sports journalism style
+- Be factually accurate - only use information from the boxscore
+
+Boxscore Data:
+{text}
+
+Game Summary:
+"
+
+  # Detailed game summary generation
+  gen_summary_detailed_v0: "As a professional NBA sports journalist, write a detailed news article summarizing the following basketball game.
+
+Your article should include:
+1. Opening paragraph with final score, winner, and game context
+2. Key player performances with specific statistics (points, rebounds, assists, etc.)
+3. Notable individual achievements or milestones
+4. Team performance analysis (shooting percentages, assists, turnovers)
+5. Brief mention of upcoming games if contextually relevant
+
+Write in professional sports journalism style. Only use facts from the provided boxscore data.
+
+Boxscore Data:
+{text}
+
+Game Summary:
+"
+
