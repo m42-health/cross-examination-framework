@@ -63,6 +63,62 @@ Question:
 Answer:
 "
 
+  qa_gen_document_medical: "As a biomedical engineering expert, please formulate {num_questions} critical, concise and closed-ended questions (in a YES/NO format) that thoroughly scrutinize whether clinical entities such as drugs, dosages, and contraindications are accurately preserved in the {document_task}.
+
+**Note**
+The questions have to be STRICTLY closed-ended.
+You should return in a JSON format.
+- 'question': specifying the question
+- 'answer': either YES or NO.
+
+Document:
+{text}
+
+JSON:
+"
+
+  qa_gen_summary_medical: "As a biomedical engineering expert, generate {num_questions} YES/NO concise, objective and critical questions from this summary focusing on clinical entities (drugs, dosages, contraindications).
+
+**Note**
+The questions have to be STRICTLY closed-ended.
+You should return in a JSON format.
+- 'question': specifying the question
+- 'answer': either YES or NO.
+
+Summary:
+{text}
+
+JSON:
+"
+
+  qa_gen_document_arabic: "كخبير في الهندسة الطبية الحيوية، يرجى صياغة {num_questions} أسئلة نقدية وموجزة ومغلقة (بصيغة نعم/لا) تدقق بدقة في {document_task}.
+
+**ملاحظة**
+يجب أن تكون الأسئلة مغلقة بشكل صارم.
+يجب إرجاع القائمة بصيغة JSON.
+- 'question': السؤال
+- 'answer': 'YES' أو 'NO'
+
+Document:
+{text}
+
+JSON:
+"
+
+  qa_gen_summary_arabic: "كخبير في الهندسة الطبية الحيوية، قم بإنشاء {num_questions} أسئلة نقدية وموجزة ومغلقة (بصيغة نعم/لا) من هذا الملخص.
+
+**ملاحظة**
+يجب أن تكون الأسئلة مغلقة بشكل صارم.
+يجب إرجاع القائمة بصيغة JSON.
+- 'question': السؤال
+- 'answer': 'YES' أو 'NO'
+
+Summary:
+{text}
+
+JSON:
+"
+
 tasks:
   generic: "content of the document"
   trial: "the protocol, participant selection, interventions, and objectives of the clinical trial"
