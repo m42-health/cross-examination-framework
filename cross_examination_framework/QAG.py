@@ -22,6 +22,9 @@ from typing import List
 import nltk
 from nltk.tokenize import word_tokenize
 import asyncio
+import logging
+
+logger = logging.getLogger(__name__)
 
 nltk.download("punkt_tab")
 
@@ -114,6 +117,7 @@ async def generate_qa_from_text(
     llm_api: LLM_Caller = None,
     screen_answers: bool = False,
     prompt_catalogue_path: str = "",
+    qa_instruction_key: str = "qa_gen_document_v0",
 ) -> List[dict]:
     """
     Generate question-answer pairs from a reference document using LLM.
@@ -136,7 +140,7 @@ async def generate_qa_from_text(
     # Add task specific parameters to the user instruction
     prompt_catalogue = load_yaml(prompt_catalogue_path)
     llm_opts["user_instruction"] = prompt_catalogue["user_instruction_set"][
-        "qa_gen_document_v0"
+        qa_instruction_key
     ].format(
         text=text, num_questions=num_questions, document_task="content of the document"
     )
@@ -149,17 +153,20 @@ async def generate_qa_from_text(
     # Ensure llm_output is a string
     if not isinstance(llm_output, str):
         # raise ValueError("Expected llm_output to be a string, but got {}".format(type(llm_output).__name__))
-        print(
-            f"This is an instance of llm_output NOT being a string {type(llm_output).__name__}!"
-        )  # TODO: what causes llm_output to be None?
+        logger.error(
+            f"Expected llm_output to be a string, but got {type(llm_output).__name__}!"
+        )
         return None
     else:
         # Postprocessing of the LLM output - extract the JSON part using a regular expression
         qa_pairs = safe_load_questions(llm_output)
         try:
             qa_pairs = json.loads(qa_pairs)
-        except:
-            print(f"No JSON content found in the LLM generated response!")
+        except json.JSONDecodeError as e:
+            logger.error(f"No JSON content found in the LLM generated response! Error: {e}")
+            return None
+        except Exception as e:
+            logger.error(f"Unexpected error parsing JSON content: {e}")
             return None
 
     # Screen answers in a second pass and update - assumes querying the text with a single question will return a more accurate result
@@ -186,7 +193,7 @@ async def generate_qa_from_text(
                     {"question": qa["question"], "answer": "IDK"}
                 )  # TODO: how should we deal with this scenario
             else:
-                print("LLM answer is indeterminable")
+                logger.warning("LLM answer is indeterminable")
 
         qa_pairs = (
             update_answers  # TODO: make sure new qa_pairs same length as previously?
@@ -200,6 +207,7 @@ async def answer_questions_from_text(
     llm_opts: dict,
     llm_api: LLM_Caller = None,
     prompt_catalogue_path: str = "",
+    answer_instruction_key: str = "gen_answers_v0",
 ) -> str:
     """
     Query a text with a specified question using an LLM with set or specified prompts.
@@ -221,7 +229,7 @@ async def answer_questions_from_text(
     # Add task specific parameters to the user instruction
     prompt_catalogue = load_yaml(prompt_catalogue_path)
     llm_opts["user_instruction"] = prompt_catalogue["user_instruction_set"][
-        "gen_answers_v0"
+        answer_instruction_key
     ].format(text=text, question=question)
     # llm_opts["user_instruction"] = llm_opts["user_instruction"].format(text=text, question=question)
 
@@ -242,6 +250,7 @@ async def cross_examine(
     llm_opts: dict,
     llm_api: LLM_Caller,
     prompt_catalogue_path: str,
+    answer_instruction_key: str = "gen_answers_v0",
 ) -> List[dict]:
     """
     Query a text from a set of independent questions, using an LLM.
@@ -272,6 +281,7 @@ async def cross_examine(
                 llm_opts=llm_opts,
                 llm_api=llm_api,
                 prompt_catalogue_path=prompt_catalogue_path,
+                answer_instruction_key=answer_instruction_key,
             )
             gold_answer = await answer_questions_from_text(
                 text=gold_text,
@@ -279,6 +289,7 @@ async def cross_examine(
                 llm_opts=llm_opts,
                 llm_api=llm_api,
                 prompt_catalogue_path=prompt_catalogue_path,
+                answer_instruction_key=answer_instruction_key,
             )
             predicted_answers.append(
                 {

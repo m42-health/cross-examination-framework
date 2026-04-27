@@ -201,7 +201,6 @@ async def perform_cross_examination(
             if qa_from_doc
             else "None or Empty"
         )
-        print(qa_from_doc_repr)
         logger.debug(
             f"RID: {request_id} - Step 1 Result (qa_from_doc): {qa_from_doc_repr}"
         )
@@ -339,7 +338,7 @@ async def perform_cross_examination(
 
             conciseness_score = calculate_summary_reduction(mock_row, src_key, gen_key)
             logger.debug(
-                f"RID: {request_id} - Raw conciness_scores: {conciseness_score}"
+                f"RID: {request_id} - Raw conciseness_score: {conciseness_score}"
             )
 
             if not isinstance(calculated_scores, dict):
@@ -457,7 +456,7 @@ async def evaluate_documents(request: CrossExamRequest = Body(...)):
 if __name__ == "__main__":
     import uvicorn
 
-    print("Starting Cross Examination API server...")
+    logger.info("Starting Cross Examination API server...")
     # Example: uvicorn eval_as_api:app --host 0.0.0.0 --port 8000 --workers 4
     uvicorn.run(
         "main:app", host="0.0.0.0", port=8000
